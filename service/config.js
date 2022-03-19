@@ -1,0 +1,3 @@
+const BASE_URL = 'http://123.207.32.32:9001';
+
+export { BASE_URL }
