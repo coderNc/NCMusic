@@ -1,0 +1,30 @@
+// wxs 只支持es5的语法！！！
+// 导出使用commonJS的 module.exports 导出
+
+function formatCount(originCount) {
+  var count = parseInt(originCount);
+  if (count > 100000000) {
+    return (count / 100000000).toFixed(1) + '亿'
+  } else if (count > 10000) {
+    return (count / 10000).toFixed(1) + '万';
+  } else {
+    return count + ''
+  }
+}
+
+function padLedtZero(time) {
+  time = time + '';
+  return ('00' + time).slice(time.length);
+}
+
+function formatDuration(duration) {
+  duration = duration / 1000;
+  var minute = Math.floor(duration / 60);
+  var second =  Math.floor(duration) % 60;
+  return padLedtZero(minute) + ':' + padLedtZero(second);
+}
+
+module.exports = {
+  formatCount: formatCount,
+  formatDuration: formatDuration,
+}

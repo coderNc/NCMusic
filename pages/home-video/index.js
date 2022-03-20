@@ -9,49 +9,49 @@ Page({
    * 页面的初始数据
    */
   data: {
-    topMVs: []
+    topMVs: [],
+    hasMore: true,
   },
 
   /**
-   * 生命周期函数--监听页面加载
+   * 生命周期函数--监听页面加载 create
    */
-  onLoad: async function (options) {
+  onLoad: function (options) {
+    this.getTopMVs(0);
+  },
+
+  getTopMVs: async function (offset) {
+    // 如果没有更多，直接返回
+    if (!this.data?.hasMore) return;
+    // wx.startPullDownRefresh() 主动调用下拉刷新
+    // !offset && wx.startPullDownRefresh();
+    wx.showNavigationBarLoading();
     const res = await getTopMV({
-      offset: 0,
-      limit: 30
+      offset,
+      limit: 10
     });
     if (res?.code === 200) {
+      if (offset) {
+        this.setData({
+          topMVs: [...this?.data?.topMVs, ...res?.data]
+        })
+      } else {
+        this.setData({
+          topMVs: res?.data
+        })
+      }
       this.setData({
-        topMVs: res?.data
+        hasMore: res?.hasMore
       })
     }
+    wx.hideNavigationBarLoading();
+    !offset && wx.stopPullDownRefresh();
   },
 
   /**
-   * 生命周期函数--监听页面初次渲染完成
+   * 生命周期函数--监听页面初次渲染完成 mount
    */
   onReady: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
 
   },
 
@@ -59,20 +59,24 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-
+    console.log('hello');
+    this.getTopMVs(0);
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-
+    this.getTopMVs(this.data?.topMVs?.length);
   },
 
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
 
+  handleVideoItemClick(e) {
+    const id = e?.target?.dataset?.item?.id;
+    console.log(id);
+    // 路由跳转时不能加js后缀
+    wx.navigateTo({
+      url: `/pages/detail-video/index?id=${id}`,
+    })
   }
 })
