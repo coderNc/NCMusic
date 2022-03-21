@@ -17,7 +17,7 @@
     "showShadowRootInWxmlPanel": true,
     "scopeDataCheck": false,
     "uglifyFileName": false,
-    "checkInvalidKey": true, 
+    "checkInvalidKey": true,
     "checkSiteMap": false,
     "uploadWithSourceMap": true,
     "compileHotReLoad": false,

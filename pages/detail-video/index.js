@@ -1,11 +1,19 @@
 // pages/detail-video/index.js
+import {
+  getMVDetail,
+  getMVUrl,
+  getRelatedVideo
+} from '../../service/video';
+
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-
+    mvDetails: {},
+    mvUrl: {},
+    relatedVideo: [],
   },
 
   /**
@@ -14,6 +22,7 @@ Page({
    */
   onLoad: function (options) {
     console.log(options);
+    this?.getMvDetail(options?.id);
   },
 
   /**
@@ -58,10 +67,38 @@ Page({
 
   },
 
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
+  async getMvDetail(id) {
+    const res = await Promise.all([
+      getMVDetail({
+        mvid: id
+      }),
+      getMVUrl({
+        id
+      }),
+      getRelatedVideo({
+        id
+      })
+    ])
 
+    if (res?.[0]?.code === 200) {
+      this?.setData({
+        mvDetails: {
+          ...res?.[0]?.data
+        }
+      })
+    }
+    if (res?.[1]?.code === 200) {
+      this?.setData({
+        mvUrl: {
+          ...res?.[1]?.data
+        }
+      })
+    }
+    if (res?.[2]?.code === 200) {
+      this?.setData({
+        relatedVideo: [...res?.[2]?.data]
+      })
+    }
   }
+
 })
