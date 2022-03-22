@@ -1,0 +1,14 @@
+<!--components/video-card/index.wxml-->
+<wxs src='../../utils/format.wxs' module="format"></wxs>
+<view class="item">
+  <view class="album">
+    <image src="{{item.coverUrl}}" mode="widthFix" />
+    <view class="info">
+      <view class="count">{{format.formatCount(item.playTime)}}</view>
+    </view>
+  </view>
+  <view class="content">
+    <view class="title">{{item.title}}</view>
+    <view class="nickname">{{item.creator[0].userName}}</view>
+  </view>
+</view>

@@ -99,6 +99,10 @@ Page({
         relatedVideo: [...res?.[2]?.data]
       })
     }
+  },
+
+  handleClick (e) {
+    console.log(e);
   }
 
 })
