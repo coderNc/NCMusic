@@ -1,2 +1,2 @@
 <!--pages/home-music/index.wxml-->
-<text>pages/home-music/index.wxml</text>
+<van-search value="{{keyWord}}" placeholder="请输入" bind:search="onSerch" />

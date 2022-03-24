@@ -1,10 +1,11 @@
 /* pages/detail-video/index.wxss */
 page {
-  padding-top: 225px;
+  padding-top: 225px;  
 }
 .video {
   width: 100%;
   position: fixed;
+  top: 0;
 }
 
 .info {
